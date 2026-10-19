@@ -1,4 +1,4 @@
-# Magium — Text Edition 0.2.2
+# Magium — Text Edition 0.2.4
 
 An offline Android and browser edition of Cristian Mihailescu's original
 interactive Magium Books 1–3, prepared with Flori Dumitrescu.
@@ -11,21 +11,29 @@ work AI-created. The source archive documents the exact integration boundaries.
 
 ## Downloads
 
-- [Android APK](Magium-Text-Edition-v0.2.2.apk?raw=true)
-- [Self-contained browser HTML](Magium-Text-Edition-v0.2.2.html?raw=true)
-- [Source, credits, tests and rebuild tools](Magium-Text-Source-v0.2.2.zip?raw=true)
+- [Android APK](Magium-Text-Edition-v0.2.4.apk?raw=true)
+- [Self-contained browser HTML](Magium-Text-Edition-v0.2.4.html?raw=true)
+- [Source, credits, tests and rebuild tools](Magium-Text-Source-v0.2.4.zip?raw=true)
 - [SHA-256 checksums](SHA256SUMS.txt)
 
 The browser file should be downloaded and opened in a browser that supports
 local HTML applications. GitHub's file viewer is not the game player.
 
 The Android APK requires Android 8.0 or later. Package: org.magium.textedition.
-Version code 5, target SDK 36. Install over an existing Magium Text Edition
+Version code 7, target SDK 36. Install over an existing Magium Text Edition
 installation to preserve its local saves; do not uninstall first. This package
 has its own identity, separate from Cristian's original Play application.
 
-This is a development release for testing. It has not been submitted to or
-approved by Google Play. Phone acceptance and further community testing continue.
+This is a development release for testing. Version 0.2.2 is uploaded as an internal-test draft in Play Console.
+Version 0.2.4 has not been uploaded there yet. Google Play approval is pending. Phone acceptance and further community testing continue.
+
+## Achievement screen update
+
+Original-style black achievement outlines, orange titles and red/green status
+marks now follow the three reading themes. Book and chapter menus show earned
+totals, with at most five achievement cards per page. The original 25-achievement
+unlock target is displayed; all books remain unlocked during testing. Back returns
+through chapters and books. Legacy leaderboard, payment and Book 4 promises are omitted.
 
 ## Included features
 
@@ -56,6 +64,11 @@ transitions and 16,148 valid snapshot roundtrips, with no unexpected mismatches
 against the original routines plus those two corrections. These checks do not
 prove every possible playthrough. jsdom checks are not physical Android tests.
 
+Nine additional rendered Chromium checks cover all three themes at 320, 390 and
+736 px, reaching all 136 achievements exactly once and checking navigation,
+layout and unchanged saves. Physical Android appearance is also being reviewed
+by Flori.
+
 The original signing key, text-edition save origin and save keys are retained.
 No keys or passwords are included. The source includes the pinned native DEX
 and scripts to reproduce APK/AAB packaging; it does not reconstruct that DEX.
@@ -79,3 +92,4 @@ licence notices and EJS's full Apache notice are retained in the source, APK and
 in-game Credits. The original emblem is not represented as being covered by the
 software's MIT licence. See LICENSE, CREDITS.md, ATTRIBUTION.txt and vendor notices
 in the source archive.
+
