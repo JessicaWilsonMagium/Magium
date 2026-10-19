@@ -1,4 +1,4 @@
-# Magium — Text Edition 0.2.4
+# Magium — Text Edition 0.2.5
 
 An offline Android and browser edition of Cristian Mihailescu's original
 interactive Magium Books 1–3, prepared with Flori Dumitrescu.
@@ -11,9 +11,9 @@ work AI-created. The source archive documents the exact integration boundaries.
 
 ## Downloads
 
-- [Android APK](Magium-Text-Edition-v0.2.4.apk?raw=true)
-- [Self-contained browser HTML](Magium-Text-Edition-v0.2.4.html?raw=true)
-- [Source, credits, tests and rebuild tools](Magium-Text-Source-v0.2.4.zip?raw=true)
+- [Android APK](Magium-Text-Edition-v0.2.5.apk?raw=true)
+- [Self-contained browser HTML](Magium-Text-Edition-v0.2.5.html?raw=true)
+- [Source, credits, tests and rebuild tools](Magium-Text-Source-v0.2.5.zip?raw=true)
 - [SHA-256 checksums](SHA256SUMS.txt)
 
 The browser file should be downloaded and opened in a browser that supports
@@ -25,7 +25,7 @@ installation to preserve its local saves; do not uninstall first. This package
 has its own identity, separate from Cristian's original Play application.
 
 This is a development release for testing. Version 0.2.2 is uploaded as an internal-test draft in Play Console.
-Version 0.2.4 has not been uploaded there yet. Google Play approval is pending. Phone acceptance and further community testing continue.
+Version 0.2.5 has not been uploaded there yet. Google Play approval is pending. Phone acceptance and further community testing continue.
 
 ## Achievement screen update
 
@@ -93,3 +93,10 @@ in-game Credits. The original emblem is not represented as being covered by the
 software's MIT licence. See LICENSE, CREDITS.md, ATTRIBUTION.txt and vendor notices
 in the source archive.
 
+
+## Original icon artwork
+
+“Magic Ball” by Agnes Landgraf (Wyonet).
+https://www.deviantart.com/wyonet/art/Magic-ball-362647907
+
+Her artwork has its own usage terms; the software and story licences do not license it.
