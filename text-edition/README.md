@@ -1,102 +1,87 @@
-# Magium — Text Edition 0.2.5
+# Magium — Text Edition 0.2.7
 
-An offline Android and browser edition of Cristian Mihailescu's original
-interactive Magium Books 1–3, prepared with Flori Dumitrescu.
-
-This edition uses **the existing game implemented by Thuiop and contributors**,
-with its original parser, execution routines and story data. AI assistance was
-used for the reading interface, offline integration, verification and Android
-packaging. It does not replace the community's implementation or make their
-work AI-created. The source archive documents the exact integration boundaries.
+Offline Android and browser edition of Cristian Mihailescu’s original interactive
+Books 1–3: 34 chapters, 2,159 scenes and 136 achievements.
 
 ## Downloads
 
-- [Android APK](Magium-Text-Edition-v0.2.5.apk?raw=true)
-- [Self-contained browser HTML](Magium-Text-Edition-v0.2.5.html?raw=true)
-- [Source, credits, tests and rebuild tools](Magium-Text-Source-v0.2.5.zip?raw=true)
+- [Android APK](Magium-Text-Edition-v0.2.7.apk?raw=true)
+- [Standalone browser HTML](Magium-Text-Edition-v0.2.7.html?raw=true)
+- [Source and rebuild tools](Magium-Text-Source-v0.2.7.zip?raw=true)
 - [SHA-256 checksums](SHA256SUMS.txt)
 
-The browser file should be downloaded and opened in a browser that supports
-local HTML applications. GitHub's file viewer is not the game player.
+Download the HTML and open it in a browser; GitHub’s file viewer does not run it.
 
-The Android APK requires Android 8.0 or later. Package: org.magium.textedition.
-Version code 7, target SDK 36. Install over an existing Magium Text Edition
-installation to preserve its local saves; do not uninstall first. This package
-has its own identity, separate from Cristian's original Play application.
+## Changes in 0.2.7
 
-This is a development release for testing. Version 0.2.2 is uploaded as an internal-test draft in Play Console.
-Version 0.2.5 has not been uploaded there yet. Google Play approval is pending. Phone acceptance and further community testing continue.
+The in-game credits now explicitly acknowledge extraction of Cristian’s original
+text and branching conditions by Thuiop. The Android launcher label remains
+“Magium Text”, independently of the longer Google Play listing title.
 
-## Achievement screen update
+## Retained from 0.2.6
 
-Original-style black achievement outlines, orange titles and red/green status
-marks now follow the three reading themes. Book and chapter menus show earned
-totals, with at most five achievement cards per page. The original 25-achievement
-unlock target is displayed; all books remain unlocked during testing. Back returns
-through chapters and books. Legacy leaderboard, payment and Book 4 promises are omitted.
+The Menu now includes “Magium community on Reddit”, linking to
+https://www.reddit.com/r/Magium/best/ . It follows the current reading theme.
+Source credits now clarify that Flori Dumitrescu shared Cristian’s original
+source and Radu Privantu created the open-source repository with her permission.
 
-## Included features
+The original-style achievement cards, book/chapter progress counters, three
+reading themes, adjustable font and text size, 30 named saves, checkpoints,
+backup export/import, normal Back navigation and original story are retained.
+All included books remain unlocked during testing; no purchases are enabled.
 
-All 34 original chapters, choices, stats, achievements, 30 named save slots,
-checkpoints, backup export/import, offline reading, adjustable text, themes and
-typefaces. Back crosses text pages and Continue steps, stopping at genuine
-choices. Next changes to Choose above when a choice is required.
+## Android updates
 
-All included books are unlocked during testing. There are no ads, purchases,
-audio, story illustrations, analytics or private testing controls in this APK.
-The original Magium emblem is included on the title screen and launcher icon.
-Fresh reading settings default to 20px; existing preferences are preserved.
+Android 8.0 or later; package org.magium.textedition; versionCode 10;
+versionName 0.2.7; target SDK 36. Install over the existing Text Edition to keep
+its saves. Do not uninstall first. This is a separate package from Cristian’s
+original application. The existing signing certificate, native DEX, asset origin
+and save namespaces are retained.
 
-## Implementation and verification
+This is a development build for testing. As of preparation on 20 October 2026,
+0.2.5/code 8 is saved as an unpublished Play Console internal-test draft and is
+on GitHub. Version 0.2.7 is prepared locally for the next upload. It has not been
+uploaded or published. Google’s rights-support reply remains pending.
 
-Upstream port: https://github.com/thuiop/magium-dev
+## Implementation and validation
 
-Pinned commit: 51f5aa9406c094e5133be2c7d69988296f86cfbc.
+This edition uses Thuiop and contributors’ existing parser, execution routines
+and story data, pinned at 51f5aa9406c094e5133be2c7d69988296f86cfbc:
+https://github.com/thuiop/magium-dev
 
-The vendored upstream files are retained unchanged. The integration has two
-documented compatibility fixes: clearing a stale death flag on two Book 1
-Chapter 3 scenes, and allowing the Book 3 consolation counter to advance beyond
-the ordinary achievement guard. See ADAPTER.md in the source archive.
+AI assistance was used for the reading interface, offline integration,
+verification and Android packaging. This does not make the upstream work
+AI-created. See ADAPTER.md for boundaries and the two compatibility corrections.
 
-The public build passes 21 focused regressions and packaged offline-asset checks.
-The prior reference comparison covered 2,159 scenes, 16,179 entry cases, 14,846
-transitions and 16,148 valid snapshot roundtrips, with no unexpected mismatches
-against the original routines plus those two corrections. These checks do not
-prove every possible playthrough. jsdom checks are not physical Android tests.
+Version 0.2.7 passes 21 existing regression checks, APK offline-startup and
+save/reload checks, original runtime/DEX/asset integrity checks, original signer
+verification and official bundletool validation. The new menu link was rendered
+at 390×844 in Dark green, Warm paper and Black without horizontal overflow.
+These checks do not replace a physical Android acceptance test; the new build
+has not yet been reviewed on a phone.
 
-Nine additional rendered Chromium checks cover all three themes at 320, 390 and
-736 px, reaching all 136 achievements exactly once and checking navigation,
-layout and unchanged saves. Physical Android appearance is also being reviewed
-by Flori.
-
-The original signing key, text-edition save origin and save keys are retained.
-No keys or passwords are included. The source includes the pinned native DEX
-and scripts to reproduce APK/AAB packaging; it does not reconstruct that DEX.
+The source contains the pinned native DEX and APK/AAB packaging tools. It does
+not reconstruct that DEX. Signing keys and passwords are not included.
 
 ## Credits and licences
 
-- **Cristian Mihailescu:** story and original game.
-- **Thuiop and contributors:** the existing port, parser, execution routines,
-  story data, stat/state helpers, achievement metadata and community testing.
-- **dragon_l:** acknowledgment for the earlier Android APK. This does not claim
-  that our new Android wrapper is his code.
-- **Radu:** release of the original source with Flori's permission.
-- **Flori Dumitrescu:** preparation of this edition and provision of the original
-  Magium emblem.
-- **EJS 3.1.10, Matthew Eernisse and contributors:** offline templates, Apache 2.0.
+- Cristian Mihailescu: story and original game.
+- Flori Dumitrescu, Cristian’s mother and sole heir: shared the original source
+  and prepared this edition in collaboration with Codex, an OpenAI agent.
+- Radu Privantu: created the original open-source repository with her permission:
+  https://github.com/raduprv/Magium
+- Thuiop and contributors: existing web adaptation, parser, runtime, data,
+  stat/state routines, achievement metadata and community testing.
+- dragon_l: acknowledgment for the earlier Android APK; this does not attribute
+  our Android wrapper to him.
+- EJS 3.1.10, Matthew Eernisse and contributors: offline templates, Apache 2.0.
+- Original Magium icon artwork: “Magic Ball” by Agnes Landgraf (Wyonet):
+  https://www.deviantart.com/wyonet/art/Magic-ball-362647907
 
-Original source: https://github.com/raduprv/Magium
+The original source repository explicitly identifies story data as CC BY 4.0:
+https://creativecommons.org/licenses/by/4.0/
+MIT software notices and EJS’s Apache notice are retained. Icon artwork has
+separate usage terms and is not represented as covered by those licences.
+See LICENSE, CREDITS.md, ATTRIBUTION.txt and vendor notices.
 
-The original release identifies its story data as CC BY 4.0. Existing software
-licence notices and EJS's full Apache notice are retained in the source, APK and
-in-game Credits. The original emblem is not represented as being covered by the
-software's MIT licence. See LICENSE, CREDITS.md, ATTRIBUTION.txt and vendor notices
-in the source archive.
-
-
-## Original icon artwork
-
-“Magic Ball” by Agnes Landgraf (Wyonet).
-https://www.deviantart.com/wyonet/art/Magic-ball-362647907
-
-Her artwork has its own usage terms; the software and story licences do not license it.
+No ads, analytics, external fonts, audio or story illustrations are bundled.

@@ -1,3 +1,3 @@
-4c1b9ce1f0310118c4a2c38b5963549ae5630c5ad0c890ed01b913025c7252b5  Magium-Text-Edition-v0.2.5.apk
-db98c5dd7c6969f28d240db176c4bb5e0c917c8385d4fc2cd2238f277898936c  Magium-Text-Edition-v0.2.5.html
-b5c0e082ff38b3e930b1b00f39346d190f0de69676b0de8996c0d7d829b8c60d  Magium-Text-Source-v0.2.5.zip
+945870e5c2c6fb658b616fd6fe2517777052defb52dcbce42169e3bde5e48452  Magium-Text-Edition-v0.2.7.apk
+ec5872f95f170e079eecf50fd3b69c63f0b58abd50534a83177e1443d6118f58  Magium-Text-Edition-v0.2.7.html
+1979a71ca72cc5ac9f115a31b4e5af5c9dffb2141ab08811e34cace223a8071a  Magium-Text-Source-v0.2.7.zip
