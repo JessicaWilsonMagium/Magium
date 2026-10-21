@@ -1,0 +1,15 @@
+{
+  "version": "0.2.9",
+  "versionCode": 12,
+  "focusedTestsPassed": 21,
+  "creditsDialog": "Opens, shows interpreter credit and source link, closes without changing game state",
+  "packagedOfflineStartup": "Passed in jsdom at native origin",
+  "signer": "Original certificate verified",
+  "storyData": "Byte-identical to 0.2.8",
+  "nativeDex": "Byte-identical to 0.2.8",
+  "engineAndSaves": "Unchanged; existing regression checks passed",
+  "aab": "Official bundletool validation passed",
+  "physicalAndroidTest": "Pending",
+  "googlePlay": "0.2.8 remains published on closed Alpha; 0.2.9 not uploaded",
+  "github": "0.2.9 upload prepared; not published"
+}
