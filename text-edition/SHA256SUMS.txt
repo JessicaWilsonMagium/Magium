@@ -1,3 +1,7 @@
-945870e5c2c6fb658b616fd6fe2517777052defb52dcbce42169e3bde5e48452  Magium-Text-Edition-v0.2.7.apk
-ec5872f95f170e079eecf50fd3b69c63f0b58abd50534a83177e1443d6118f58  Magium-Text-Edition-v0.2.7.html
-1979a71ca72cc5ac9f115a31b4e5af5c9dffb2141ab08811e34cace223a8071a  Magium-Text-Source-v0.2.7.zip
+eeb0e5ea1405ed77879c4573a64e8cfa222c5410a8f8025a4e4e281e0cbfa202  Magium-Text-Build-Status-v0.2.8.txt
+a1fb5b841ed96326548d31fd101e76c32642216f94b1302ad71f12468752dc7c  Magium-Text-Edition-v0.2.8.aab
+98ef032cc03fc8222f155cf9efc9cb19524aefd76af7dee1c47afee332e38246  Magium-Text-Edition-v0.2.8.apk
+0d0782a0bb997ac283db7992d9f7f29593abf28e33acc65b63dc186a569d95f4  Magium-Text-Edition-v0.2.8.html
+4d9de13155a7704e6bbd0651fa36556e5f3c3afb42680ef7ef8f67c659048def  Magium-Text-Source-v0.2.8.zip
+a4048512c0fddad1c5ff82c7d871c2044c735c3fd4de253a6b65dd37c033afa2  README.md
+efa0f9386c51bec7d57ac169f03ed5f338dbee3752c3df84dd73f4bf2860947c  privacy-policy.html

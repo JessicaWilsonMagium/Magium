@@ -1,0 +1,22 @@
+Magium Text — 0.2.8 / versionCode 11 — 21 October 2026
+
+READY: APK and AAB built; original signing certificate confirmed; bundletool
+validation passed. Privacy policy is available offline via Menu -> Privacy policy.
+Existing package, native DEX, storage origin, save namespace and story preserved.
+21 regression checks previously passed for this source; packaged-app offline
+startup, save/reload, backup bridge, runtime integrity and privacy menu checks
+passed in jsdom. Physical Android acceptance test is pending.
+
+NEXT: Upload AAB to Closed testing -> Alpha, replacing pending 10 (0.2.7).
+Internal testing should remain unchanged. Publishing overview currently has
+15 changes not submitted for review. Review the final list before submission.
+Do not send the old internal-testing invitation for the required closed test.
+Get the closed-test invitation from Alpha -> Testers once available.
+Public policy: https://jessicawilsonmagium.github.io/Magium/privacy-policy.html
+GitHub text-edition sources and download files still require the 0.2.8 update.
+No production release, email or tester invitation has been sent.
+
+OTHER PENDING: Book 3 ebook corrections (chapter 4: 25 points, Premonition 4;
+chapter 12 allocation and the agreed original dagger/wolf-bracelet Eiden branch)
+have not been applied. Update ebooks and existing reader-thread link before
+the tester announcement. Refer to the main Magium handover for project details.
