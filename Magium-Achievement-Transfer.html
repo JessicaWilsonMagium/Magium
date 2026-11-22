@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Magium — Achievement Transfer</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#101f1b;color:#f2ead7;font:16px/1.55 system-ui,sans-serif}main{max-width:720px;margin:0 auto;padding:30px 18px 50px}h1,h2{font-family:Georgia,serif;font-weight:normal}h1{font-size:2.2rem;line-height:1.15;color:#ddc596;margin:.5rem 0}h2{font-size:1.3rem;margin:0 0 .6rem}.brand{letter-spacing:.2em;color:#ddc596;font-size:.85rem}.card{border:1px solid #4a5947;border-radius:12px;padding:18px;margin-top:18px;background:#172c25}label{display:block;font-weight:600}input{display:block;width:100%;font:inherit;margin:10px 0;color:inherit}input::file-selector-button,button{border:1px solid #d7c191;border-radius:6px;padding:10px 14px;background:#ddc596;color:#17251d;font:600 15px system-ui;cursor:pointer}button:disabled{opacity:.45;cursor:default}button{width:100%;margin-top:12px}small,.muted{color:#c5cec1}p{margin:.5em 0}table{width:100%;border-collapse:collapse;margin-top:12px}td,th{padding:8px;border-bottom:1px solid #4a5947;text-align:right}td:first-child,th:first-child{text-align:left}#status{white-space:pre-wrap;margin-top:12px}#status.error{color:#ffc3bc}a{color:#e8cd9f}ol{padding-left:22px}footer{margin-top:24px;color:#c5cec1;font-size:.85rem}
+</style></head><body><main>
+<div class="brand">MAGIUM · LEGACY TOOLS</div><h1>Achievement Transfer</h1>
+<p>Bring your earned achievements from Cristian’s original Magium to Magium Text Edition.</p>
+<p class="muted">This tool runs entirely in your browser. No data is uploaded. Nothing in either game or your Google account is changed.</p>
+<section class="card"><h2>1. Original game data</h2>
+<p>Go to <a href="https://takeout.google.com/" target="_blank" rel="noopener noreferrer">Google Takeout</a>, deselect all products, select <strong>Google Play Games Services</strong>, then create a one-time ZIP export using the Google account you used for Magium. Download the ZIP when it is ready.</p>
+<label for="legacy">Select your Google Takeout ZIP</label><input id="legacy" type="file" accept=".zip,application/zip">
+<small>Only the original Magium achievement file inside the archive is read. If there is no cloud backup, this tool cannot recover achievements.</small></section>
+<section class="card"><h2>2. Current Magium Text backup</h2>
+<p>In Magium Text, export a fresh backup using the game's backup menu. Keep that original JSON file safe. Do not play further until you have imported the merged backup.</p>
+<label for="current">Select your exported Magium Text JSON</label><input id="current" type="file" accept=".json,application/json">
+<small>Your current saved games, checkpoints and achievements are preserved in the new copy.</small></section>
+<section class="card"><h2>3. Review and download</h2><button id="convert">Compare achievements</button><div id="status" role="status" aria-live="polite"></div><div id="results" hidden><table><thead><tr><th>Book</th><th>Original</th><th>Current</th><th>Combined</th></tr></thead><tbody id="rows"></tbody></table><button id="download" disabled>Download merged backup</button><p>Import the downloaded JSON via Magium Text's backup menu. Confirm the combined totals in Achievements and check your saved games. Do not delete your original backup.</p></div></section>
+<footer>Magium Achievement Transfer · v1.0 test release. Achievements only; original story saves, Google leaderboard awards and purchases are not transferred. For Magium Text Edition backup format v1.</footer>
+</main><script>
+'use strict';
+const mapping=["v_ac_ch1_coward","v_ac_ch1_die","v_ac_ch1_honesty","v_ac_ch2_talker","v_ac_ch2_nails","v_ac_ch2_master","v_ac_ch2_unlikely","v_ac_ch3_message","v_ac_ch3_army","v_ac_ch3_close","v_ac_ch4_noble","v_ac_ch4_cutthroat","v_ac_ch4_kneed","v_ac_ch5_wielder","v_ac_ch5_liar","v_ac_ch5_deed","v_ac_ch5_shameless","v_ac_ch6_tyrath","v_ac_ch6_berserker","v_ac_ch6_immersion","v_ac_ch7_answer","v_ac_ch7_crusher","v_ac_ch7_hadrik","v_ac_ch8_democratie","v_ac_ch8_first","v_ac_ch8_hydra","v_ac_ch9_observer","v_ac_ch9_decision","v_ac_ch10_shaman","v_ac_ch10_toast","v_ac_ch10_reunion","v_ac_ch11_symbol","v_ac_ch11_stillwater","v_ac_ch11_casualties","v_ac_ch11_average","v_ac_b2_ch1_news","v_ac_b2_ch1_distance","v_ac_b2_ch1_second","v_ac_b2_ch1_breed","v_ac_b2_ch2_bro","v_ac_b2_ch2_easy","v_ac_b2_ch2_wall","v_ac_b2_ch2_griffin","v_ac_b2_ch3_enemy","v_ac_b2_ch3_cage","v_ac_b2_ch4_player","v_ac_b2_ch4_intimidation","v_ac_b2_ch4_hadrik","v_ac_b2_ch4_risk","v_ac_b2_ch4_trampler","v_ac_b2_ch4_spear","v_ac_b2_ch4_stats","v_ac_b2_ch4_time","v_ac_b2_ch4_motive","v_ac_b2_ch5_tribal","v_ac_b2_ch5_divide","v_ac_b2_ch5_speaker","v_ac_b2_ch5_united","v_ac_b2_ch6_secret","v_ac_b2_ch6_edge","v_ac_b2_ch7_average","v_ac_b2_ch7_culprit","v_ac_b2_ch7_delivered","v_ac_b2_ch7_cookie","v_ac_b2_ch8_trivia","v_ac_b2_ch8_savior","v_ac_b2_ch8_tree","v_ac_b2_ch8_effects","v_ac_b2_ch8_gentleman","v_ac_b2_ch9_missing","v_ac_b2_ch9_helper","v_ac_b2_ch9_king","v_ac_b2_ch9_cards","v_ac_b2_ch10_creative","v_ac_b2_ch10_mammoth","v_ac_b2_ch10_demolition","v_ac_b2_ch10_stalker","v_ac_b2_ch11_supportive","v_ac_b2_ch11_madman","v_ac_b2_ch11_cutthroat","v_ac_b2_ch11_average2","v_ac_b2_ch11_hidden","v_ac_b2_ch11_elephant","v_ac_b3_ch1_regrets","v_ac_b3_ch1_password","v_ac_b3_ch2_metal","v_ac_b3_ch2_serious","v_ac_b3_ch2_lie","v_ac_b3_ch2_reckless","v_ac_b3_ch3_ominous","v_ac_b3_ch3_unexpected","v_ac_b3_ch3_job","v_ac_b3_ch3_unforeseen","v_ac_b3_ch4_demolisher","v_ac_b3_ch4_alliance","v_ac_b3_ch4_deception","v_ac_b3_ch4_thrower","v_ac_b3_ch5_opportunist","v_ac_b3_ch5_days","v_ac_b3_ch5_footsteps","v_ac_b3_ch5_passed","v_ac_b3_ch6_natural","v_ac_b3_ch6_assist","v_ac_b3_ch6_peek","v_ac_b3_ch6_credo","v_ac_b3_ch6_guardian","v_ac_b3_ch6_freeze","v_ac_b3_ch6_curiosity","v_ac_b3_ch6_average","v_ac_b3_ch6_quarantine","v_ac_b3_ch6_echoes","v_ac_b3_ch7_honorable","v_ac_b3_ch7_sharpshooter","v_ac_b3_ch7_paranoid","v_ac_b3_ch8_bluffer","v_ac_b3_ch8_unusual","v_ac_b3_ch8_heartfelt","v_ac_b3_ch8_friend","v_ac_b3_ch9_consolation","v_ac_b3_ch9_prize","v_ac_b3_ch9_moment","v_ac_b3_ch9_targets","v_ac_b3_ch9_trinkets","v_ac_b3_ch10_benefits","v_ac_b3_ch10_third","v_ac_b3_ch10_behind","v_ac_b3_ch10_reasonable","v_ac_b3_ch10_forbidden","v_ac_b3_ch11_fourth","v_ac_b3_ch11_taste","v_ac_b3_ch11_aftermath","v_ac_b3_ch12_battle","v_ac_b3_ch12_hugger","v_ac_b3_ch12_liar","v_ac_b3_ch12_dagger","v_ac_b3_ch12_delegator","v_ac_b3_ch12_average"];
+const COUNTER='v_ac_b3_ch9_consolation', known=new Set(mapping.filter(id=>id!==COUNTER));
+const MAX_BACKUP=2*1024*1024, MAX_ZIP=256*1024*1024;
+const fail=m=>{throw new Error(m)};
+function crc32(a){let c=0xffffffff;for(const n of a){c^=n;for(let j=0;j<8;j++)c=(c>>>1)^((c&1)?0xedb88320:0)}return (c^0xffffffff)>>>0}
+async function readLegacy(file){
+ if(file.size>MAX_ZIP)fail('Export is too large. Export only Google Play Games Services.');
+ const bytes=new Uint8Array(await file.arrayBuffer()),v=new DataView(bytes.buffer);
+ const u16=p=>v.getUint16(p,true),u32=p=>v.getUint32(p,true);
+ let end=-1;for(let p=bytes.length-22;p>=Math.max(0,bytes.length-65557);p--){if(u32(p)===0x06054b50&&p+22+u16(p+20)===bytes.length){end=p;break}}
+ if(end<0)fail('This is not a complete ZIP archive.');
+ if(u16(end+4)||u16(end+6)||u16(end+8)!==u16(end+10))fail('Split or multi-disk ZIP archives are not supported.');
+ const count=u16(end+10),length=u32(end+12),offset=u32(end+16);
+ if(count===65535||offset+length!==end)fail('Unsupported ZIP layout.');
+ const decoder=new TextDecoder('utf-8',{fatal:true});let entry=null,p=offset;
+ for(let i=0;i<count;i++){
+  if(p+46>end||u32(p)!==0x02014b50)fail('Invalid ZIP directory.');
+  const n=u16(p+28),e=u16(p+30),c=u16(p+32),next=p+46+n+e+c;
+  if(next>end)fail('Invalid ZIP directory.');
+  const name=decoder.decode(bytes.subarray(p+46,p+46+n));
+  if(name==='Takeout/Google Play Games Services/Games/Magium/Saved Games/achievementsave/Data.bin'){
+   if(entry)fail('More than one original achievement record found.');
+   entry={flags:u16(p+8),method:u16(p+10),crc:u32(p+16),compressed:u32(p+20),actual:u32(p+24),local:u32(p+42),name};
+  }p=next;
+ }
+ if(p!==end||!entry)fail('No original Magium cloud achievement file found in this export.');
+ const {flags,method,crc,compressed,actual,local,name}=entry;
+ if(flags&1||actual>4096||compressed>8192||local+30>offset||u32(local)!==0x04034b50)fail('Invalid or unsupported achievement record.');
+ const nameLength=u16(local+26),start=local+30+nameLength+u16(local+28);
+ if(start+compressed>offset||decoder.decode(bytes.subarray(local+30,local+30+nameLength))!==name||u16(local+8)!==method)fail('Invalid achievement record.');
+ let data=bytes.slice(start,start+compressed);
+ if(method===8){
+  if(typeof DecompressionStream==='undefined')fail('Please use a recent Chrome, Edge or Firefox browser.');
+  const reader=new Blob([data]).stream().pipeThrough(new DecompressionStream('deflate-raw')).getReader();
+  const chunks=[];let size=0;while(true){const r=await reader.read();if(r.done)break;size+=r.value.length;if(size>4096){await reader.cancel();fail('Invalid achievement record size.')}chunks.push(r.value)}
+  data=new Uint8Array(size);let at=0;for(const c of chunks){data.set(c,at);at+=c.length}
+ }else if(method!==0)fail('Unsupported ZIP compression.');
+ if(data.length!==actual||crc32(data)!==crc)fail('The achievement record is damaged.');
+ return decodeFlags(decoder.decode(data));
+}
+function decodeFlags(raw){
+ const values=raw.trim().split('&');
+ if(![35,83,93,137].includes(values.length))fail('Unrecognized original achievement format ('+values.length+' fields). Please contact the Magium project.');
+ const earned=[];let consolationDeaths=0;
+ for(let i=0;i<values.length;i++){
+  const id=mapping[i],value=values[i];
+  if(id===COUNTER){if(!/^(0|[1-9][0-9]*)$/.test(value)||!Number.isSafeInteger(Number(value)))fail('Invalid achievement progress.');consolationDeaths=Number(value)}
+  else{if(value!=='0'&&value!=='1')fail('Unrecognized achievement flag.');if(value==='1')earned.push(id)}
+ }
+ return {earned,consolationDeaths};
+}
+function plain(x){return x!==null&&typeof x==='object'&&!Array.isArray(x)}
+function safe(x,depth=0){if(depth>12)fail('Backup is too deeply nested.');if(x===null||typeof x==='string'||typeof x==='boolean')return;if(typeof x==='number'){if(!Number.isFinite(x))fail('Invalid backup number.');return}if(Array.isArray(x)){if(x.length>10000)fail('Invalid backup list.');for(const y of x)safe(y,depth+1);return}if(!plain(x))fail('Invalid backup data.');for(const [k,y]of Object.entries(x)){if(['__proto__','constructor','prototype'].includes(k))fail('Invalid backup field.');safe(y,depth+1)}}
+function parseBackup(text){
+ if(new TextEncoder().encode(text).length>MAX_BACKUP)fail('Backup exceeds the 2 MB limit.');
+ let d;try{d=JSON.parse(text)}catch{fail('Invalid JSON backup.')}
+ safe(d);
+ if(!plain(d)||d.format!=='magium-interactive-backup'||d.version!==1||!plain(d.records)||typeof d.createdAt!=='string'||!Number.isFinite(Date.parse(d.createdAt)))fail('Select a Magium Text backup exported from the game.');
+ const r=d.records,n=Object.keys(r).filter(k=>k.startsWith('-slot-')).length;
+ const allowed=new Set(['-auto','-checkpoint','-manual','-achievements','-book2-start','-book3-start',...Array.from({length:n},(_,i)=>'-slot-'+(i+1))]);
+ if(![10,20,30,50].includes(n)||Object.keys(r).some(k=>!allowed.has(k))||['-auto','-checkpoint','-manual','-achievements',...Array.from({length:n},(_,i)=>'-slot-'+(i+1))].some(k=>!Object.hasOwn(r,k)))fail('This backup has missing or unexpected records.');
+ const a=r['-achievements'];
+ if(a!==null&&(!plain(a)||a.version!==1||!Array.isArray(a.earned)||a.earned.some(x=>typeof x!=='string'||!/^v_ac_[a-zA-Z0-9_]+$/.test(x))||(a.consolationDeaths!==undefined&&(!Number.isSafeInteger(a.consolationDeaths)||a.consolationDeaths<0))))fail('Invalid current achievement collection.');
+ return d;
+}
+function mergeBackup(text,legacy){
+ const d=parseBackup(text),a=d.records['-achievements']||{version:1,earned:[]};
+ const current=new Set(a.earned),combined=new Set([...current,...legacy.earned]);
+ d.records['-achievements']={...a,earned:[...combined],consolationDeaths:Math.max(a.consolationDeaths||0,legacy.consolationDeaths||0)};
+ const output=JSON.stringify(d);parseBackup(output);
+ const counts=ids=>[1,2,3].map(b=>[...new Set(ids)].filter(id=>known.has(id)&&(id.startsWith('v_ac_b2_')?2:id.startsWith('v_ac_b3_')?3:1)===b).length);
+ return {output,rows:[counts(legacy.earned),counts(current),counts(combined)],added:legacy.earned.filter(id=>!current.has(id)).length};
+}
+const el=id=>document.getElementById(id);let output=null,generation=0;
+function clear(){generation++;output=null;el('results').hidden=true;el('download').disabled=true;el('status').textContent='';el('status').className=''}
+for(const id of ['legacy','current'])el(id).addEventListener('change',clear);
+el('convert').addEventListener('click',async()=>{
+ clear();const token=generation;el('convert').disabled=true;el('status').textContent='Reading files locally…';
+ try{
+  const legacy=el('legacy').files[0],current=el('current').files[0];
+  if(!legacy||!current)fail('Please choose both files first.');
+  if(current.size>MAX_BACKUP)fail('Current backup is too large.');
+  const result=mergeBackup(await current.text(),await readLegacy(legacy));if(token!==generation)return;
+  output=result.output;const body=el('rows');body.replaceChildren();
+  for(let i=0;i<3;i++){const row=document.createElement('tr');for(const value of ['Book '+(i+1),...result.rows.map(r=>r[i])]){const td=document.createElement('td');td.textContent=value;row.append(td)}body.append(row)}
+  el('status').textContent=result.added+' new achievements found in your original cloud backup. Review the totals before importing.';el('results').hidden=false;el('download').disabled=false;
+ }catch(e){if(token===generation){el('status').className='error';el('status').textContent=e instanceof Error?e.message:'Unable to read files.'}}finally{el('convert').disabled=false}
+});
+el('download').addEventListener('click',()=>{if(!output)return;const url=URL.createObjectURL(new Blob([output],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download='Magium-Text-Merged-Backup.json';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000)});
+</script></body></html>
